@@ -108,13 +108,13 @@ struct TemperatureSensorDataPoint temperatureSensorData[] = {
  * P:       Analog input pin number
  * R:       Pull-down resistor value
  * pull-Up: True if pull-up resistor used, False for a pull-down resistor
- * Vcc:     High voltage of the circuit. Usually = +5 Volts
+ * Vin:     High voltage of the circuit. Usually = +5 Volts
  * bits:    Number of ADC bits (10 for Arduino)
  */
-float readTemparature(int P, long R, bool pullUp, float Vcc, int bits)
+float readTemparature(int P, long R, bool pullUp, float Vin, int bits)
 {
-    float V      = analogRead(P)*(Vcc/pow(2, bits));
-    long sensorR = (pullUp) ? long(R*(Vcc-V)/V) : long(R*V/(Vcc-V));
+    float V      = analogRead(P)*(Vin/pow(2, bits));
+    long sensorR = (pullUp) ? long(R*V/(Vin-V)) : long(R*(Vin-V)/V);
 
     const int numDataPoints = signed(sizeof(temperatureSensorData)/sizeof(TemperatureSensorDataPoint)); 
     int i;
